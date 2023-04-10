@@ -1,0 +1,25 @@
+@import './variables';
+@import './reset.css';
+
+
+
+@font-face {
+    font-family: lale;
+    src: url(../fonts/lale.ttf);
+}    
+@font-face {
+    font-family: naz;
+    src: url(../fonts/nazanin.ttf);
+}    
+@font-face {
+    font-family: vazir;
+    src: url(../fonts/Vazir.ttf);
+}
+body{
+    background: $white2;
+}
+* , body , html{
+    font-family: vazir;
+
+} 
+
