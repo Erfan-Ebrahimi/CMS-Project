@@ -11,6 +11,41 @@
         color: $white1;
         padding: 15px;
         text-align: right;
-        border-bottom: 2px solid red;
+        border-bottom: 2px solid #6c48bb;
+    }
+
+    .sidebar-links{
+        margin-top: 20px;
+
+        li{
+            position: relative;
+            padding: 15px;
+
+            &.active{
+                background: #391588;
+            }
+            &:hover{
+                background: #391588;
+            }
+            &:first-child{
+                margin-bottom: 20px;
+            }
+          
+            a{
+                width: 100%;
+                color: $white1;
+                font-size: 1.3rem;
+                text-decoration: none;
+                display: flex;
+                justify-content: right;
+                align-items: center;
+
+            }
+            
+            .icon{
+                margin-left: 8px;
+            }
+            
+        }
     }
 }
