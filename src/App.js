@@ -1,8 +1,11 @@
+import Sidebar from "./components/sidebar/Sidebar"
 
-function App() {
+const App = () => {
   return (
-    <p>first commite</p>
-  );
+    <div>
+      <Sidebar/>
+    </div>
+  )
 }
 
-export default App;
+export default App

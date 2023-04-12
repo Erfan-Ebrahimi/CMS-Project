@@ -1,0 +1,16 @@
+@import '../../style/sass/variables.scss';
+
+.sidebar{
+    position: fixed;
+    background: $blue;
+    height: 100vh;
+    flex: 1;
+
+    .sidebar-title{
+        font-size: 1rem;
+        color: $white1;
+        padding: 15px;
+        text-align: right;
+        border-bottom: 2px solid red;
+    }
+}

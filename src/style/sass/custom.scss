@@ -17,9 +17,10 @@
 }
 body{
     background: $white2;
+    display: flex;
+    direction: rtl;
 }
 * , body , html{
     font-family: vazir;
-
 } 
 
