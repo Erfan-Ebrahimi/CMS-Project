@@ -1,0 +1,90 @@
+@import '../../style/sass/variables.scss';
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 155%;
+
+    .h-right{
+        display: flex;
+        align-items: center;
+        column-gap: 20px;
+
+        img{
+            width: 45px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .description{
+            display: flex;
+            flex-direction: column;
+            row-gap: 5px;
+
+            h1{
+                font-size: 1.2rem;
+            }
+            h3{
+                font-size: .9rem;
+                color: #858585;
+            }
+        }
+    }
+
+    .h-left{
+        display: flex;
+        column-gap: 5px;
+
+        .search-box{
+            display: flex;
+            justify-content:space-between;
+            align-items: center;
+            padding-left: 5px;
+            background: $white1;
+            box-shadow: rgba(149 ,157 , 165 , 0.2) 0 8px 24px;
+            border-radius: 15px;
+            width: 400px;
+            height: 45px;
+
+            input{
+                border: none;
+                outline: none;
+                background: unset;
+                width: 100%;
+                font-size: 1.1rem;
+                padding: 10px 20px 10px 10px;
+            }
+
+            button{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 40px;
+                font-size: 1.5rem;
+                background: unset;
+                padding: 4px 20px;
+                border: none;
+                outline: none;
+            }
+        }
+
+        .left-icon{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50px;
+            padding: 10px;
+            border-radius: 10px;
+            color: $white1;
+            background: $blue;
+            width: 40px;
+            height: 40px;
+            border: none;
+            outline: none;
+            box-shadow: rgba(149 ,157 , 165 , 0.8) 0 8px 24px;
+
+
+        }
+    }
+}
