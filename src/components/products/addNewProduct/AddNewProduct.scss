@@ -1,0 +1,60 @@
+@import '../../../style/sass/variables.scss';
+
+.products-main{
+    margin-top: 6px;
+
+    .products-title{
+        font-size: 2rem;
+    }
+
+    .add-products-form{
+        margin-top: 30px;
+        background: $white1;
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        padding: 20px;
+        border-radius: 20px;
+
+        .add-products-form-wrap{
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 15px;
+        }
+
+        .add-products-form-group{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            column-gap: 10px;
+            background: $white3;
+            padding: 0 20px;
+            border-radius: 10px;
+
+            .icon{
+                color: red;
+            }
+
+            .add-products-input{
+                width: 100%;
+                outline: none;
+                border: none;
+                background: unset;
+                padding: 8px 10px;
+                font-size: 1.1rem;
+
+            }
+        }
+
+        .add-btn{
+            background: $blue;
+            color: $white1;
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            border-radius: 10px;
+
+        }
+    }
+}
