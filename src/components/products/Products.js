@@ -1,8 +1,14 @@
 import './Products.scss';
 
+// ----------COMPONENTS-------------//
+import ErrorBox from '../errorBox/ErrorBox';
+import AddNewProduct from './addNewProduct/AddNewProduct';
 const Products = () => {
   return (
-    <div>Products</div>
+    <div>
+      <ErrorBox msg='هیچ محصولی یافت نشد !!'/>
+      <AddNewProduct/>
+    </div>
   )
 }
 
