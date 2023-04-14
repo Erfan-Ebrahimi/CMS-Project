@@ -23,27 +23,27 @@ const AddNewProduct = () => {
                     <input type="text" className='add-products-input' placeholder='نام محصول' />
                 </div>
                 <div className='add-products-form-group'>
-                    <TbAlphabetLatin className='icon'/>
+                    <BsCurrencyDollar className='icon'/>
                     <input type="text" className='add-products-input' placeholder='قیمت محصول' />
                 </div>
                 <div className='add-products-form-group'>
-                    <TbAlphabetLatin className='icon'/>
+                    <ImListNumbered className='icon'/>
                     <input type="text" className='add-products-input' placeholder='موجودی محصول' />
                 </div>
                 <div className='add-products-form-group'>
-                    <TbAlphabetLatin className='icon'/>
+                    <BiImageAdd className='icon'/>
                     <input type="text" className='add-products-input' placeholder='آدرس عکس  محصول' />
                 </div>
                 <div className='add-products-form-group'>
-                    <TbAlphabetLatin className='icon'/>
+                    <AiOutlineStar className='icon'/>
                     <input type="text" className='add-products-input' placeholder='میزان محبوبیت محصول' />
                 </div>
                 <div className='add-products-form-group'>
-                    <TbAlphabetLatin className='icon'/>
+                    <RiNumbersLine className='icon'/>
                     <input type="text" className='add-products-input' placeholder='میزان فروش محصول' />
                 </div>
                 <div className='add-products-form-group'>
-                    <TbAlphabetLatin className='icon'/>
+                    <MdOutlineColorLens className='icon'/>
                     <input type="text" className='add-products-input' placeholder='تعداد رنگ بندی محصول' />
                 </div>
             </div>
