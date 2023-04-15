@@ -1,6 +1,6 @@
 import './ProductsTable.scss';
 
-import img1 from '../../../images/prof.jfif';
+import img1 from '../../../images/prof1.jfif';
 
 const ProductsTable = () => {
   return (
