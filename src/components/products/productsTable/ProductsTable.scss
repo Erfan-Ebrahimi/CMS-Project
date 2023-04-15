@@ -1,0 +1,34 @@
+@import '../../../style/sass/variables.scss';
+
+.products-table{
+    width: 100%;
+    margin-top: 30px;
+    border-radius: 10px;
+
+    .pt-heading{
+        text-align: center;
+    }
+
+    .pt-body{
+        text-align: center;
+    }
+
+    td{
+        align-items: center;
+    }
+
+    .pt-img{
+        width: 150px;
+        height: 100px;
+        object-fit: contain;
+        border-radius: 15px;
+    }
+
+    .pt-btn{
+        // border: none;
+        // outline: none;
+        font-size: 1.2rem;
+        margin-left: 5px;
+        color: black !important;
+    }
+}
