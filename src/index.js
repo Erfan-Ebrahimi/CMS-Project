@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './style/sass/custom.scss';
 
 
-const root = ReactDOM.createRoot(document.querySelector('body'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
