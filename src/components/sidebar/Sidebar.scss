@@ -19,14 +19,7 @@
 
         li{
             position: relative;
-            padding: 15px;
-
-            &.active{
-                background: #391588;
-            }
-            &:hover{
-                background: #391588;
-            }
+            
             &:first-child{
                 margin-bottom: 20px;
             }
@@ -39,7 +32,14 @@
                 display: flex;
                 justify-content: right;
                 align-items: center;
+                padding: 15px;
 
+                &.active{
+                    background: #391588;
+                }
+                &:hover{
+                    background: #391588;
+                }
             }
             
             .icon{

@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import './Sidebar.scss';
 
 // ----------ICONS--------------//
@@ -13,16 +14,16 @@ const Sidebar = () => {
     <div className='sidebar'>
         <h1 className='sidebar-title'>به داشبورد خوش آمدید</h1>
         <ul className='sidebar-links'>
-            <li className='active'><a href="#1"><AiOutlineHome className='icon'/>خانه</a></li>
-            <li><a href="#1"><MdProductionQuantityLimits className='icon'/> محصولات</a></li>
-            <li><a href="#1"><BiCommentDetail className='icon'/>نظرات</a></li>
-            <li><a href="#1"><FiUsers className='icon'/>کاربران</a></li>
-            <li><a href="#1"><BsBagCheck className='icon'/>سفارشات</a></li>
-            <li><a href="#1"><BsCurrencyDollar className='icon'/>تخفیف ها</a></li>
+            <li><NavLink to="/"><AiOutlineHome className='icon'/>خانه</NavLink></li>
+            <li><NavLink to="/products"><MdProductionQuantityLimits className='icon'/> محصولات</NavLink></li>
+            <li><NavLink to="/comments"><BiCommentDetail className='icon'/>نظرات</NavLink></li>
+            <li><NavLink to="/Users"><FiUsers className='icon'/>کاربران</NavLink></li>
+            <li><NavLink to="/orders"><BsBagCheck className='icon'/>سفارشات</NavLink></li>
+            <li><NavLink to="/offs"><BsCurrencyDollar className='icon'/>تخفیف ها</NavLink></li>
         </ul>
 
     </div>
   )
 }
 
-export default Sidebar
+export default Sidebar;
