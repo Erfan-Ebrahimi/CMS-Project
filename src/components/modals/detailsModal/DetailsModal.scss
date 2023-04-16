@@ -25,9 +25,14 @@
     .details-modal{
         background: $white2;
         border-radius: 15px;
-        padding: 50px;
+        padding: 40px;
         text-align: center;
         border: 2px solid $blue;
 
+    }
+
+    .btn-close{
+        display: flex;
+        margin-bottom: 20px;
     }
 }

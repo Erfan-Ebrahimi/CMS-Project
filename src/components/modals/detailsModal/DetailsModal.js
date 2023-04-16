@@ -23,8 +23,9 @@ const DetailsModal = ({ hideModal }) => {
     })
 
   return ReactDOM.createPortal(
-    <div className='modal-parent active'>
+      <div className='modal-parent active'>
         <div className="details-modal">
+            <button type="button" className="btn-close" aria-label="Close" onClick={hideModal}></button>
             <Table striped bordered hover>
                 <thead>
                     <tr>
