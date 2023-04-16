@@ -1,19 +1,22 @@
 import { useState } from 'react';
 import './ProductsTable.scss';
+// ------------BOOTSTRAP--------------//
 import { Table } from 'react-bootstrap';
-import img1 from '../../../images/prof1.jfif';
 
-// -----------COMPONENTS---------//
+// -----------MODALS---------//
 import DeleteModal from '../../modals/deleteModal/DeleteModal';
 
 // -------------ICONS------------//
 import {GrCircleInformation} from 'react-icons/gr'
 import {RiDeleteBin6Line} from 'react-icons/ri'
 import {AiOutlineEdit} from 'react-icons/ai'
+import img1 from '../../../images/prof1.jfif';
+import DetailsModal from '../../modals/detailsModal/DetailsModal';
 
 const ProductsTable = () => {
 
   const [isShowDeleteModal , setIsShowDeleteModal] = useState(false)
+  const [isShowDetailsModal , setIsShowDetailsModal] = useState(false)
 
   const deleteModalSubmitAction = () => {
     console.log('red')
@@ -23,6 +26,12 @@ const ProductsTable = () => {
   const deleteModalCancelAction = () => {
     console.log('blue')
     setIsShowDeleteModal(false)
+  }
+
+  // for close DetailsModal
+  const closeDetailsModal = () => {
+    setIsShowDetailsModal(false)
+    console.log('DetailsModal closed');
   }
 
   return (
@@ -46,15 +55,16 @@ const ProductsTable = () => {
             <td className="align-middle">92000 تومان</td>
             <td className="align-middle">85</td>
             <td className="align-middle">
-                <button className='pt-btn btn btn-warning'><GrCircleInformation/></button>
-                <button className='pt-btn btn btn-success' onClick={() => setIsShowDeleteModal(true)}><AiOutlineEdit/></button>
-                <button className='pt-btn btn btn-danger'><RiDeleteBin6Line/></button>
+                <button className='pt-btn btn btn-warning' onClick={() => setIsShowDetailsModal(true)}><GrCircleInformation/></button>
+                <button className='pt-btn btn btn-success'><AiOutlineEdit/></button>
+                <button className='pt-btn btn btn-danger' onClick={() => setIsShowDeleteModal(true)}><RiDeleteBin6Line/></button>
             </td>
           </tr>
         </tbody>
       </Table>
 
       { isShowDeleteModal && <DeleteModal submitAction={deleteModalSubmitAction} cancelAction={deleteModalCancelAction} />}
+      { isShowDetailsModal && <DetailsModal hideModal={closeDetailsModal}/>}
     </>
   )
 }

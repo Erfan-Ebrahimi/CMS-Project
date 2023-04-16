@@ -1,9 +1,27 @@
+import { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Table } from 'react-bootstrap';
 import './DetailsModal.scss';
 
+//hideModal az ProductsTable miad
+const DetailsModal = ({ hideModal }) => {
 
-const DetailsModal = () => {
+    useEffect(() => {
+        const closed = (event) => {
+            // 27 => ESCAPE in keyboard
+            if (event.keyCode === 27){
+                hideModal()
+            }
+        }
+        
+        window.addEventListener('keydown' , closed)
+
+        //baray jelogiri az tadakhol event anra bad az unMouting remove mikonim
+        //baray faze unMouting dar useEffect bayad return anjam dahim
+
+        return () => window.removeEventListener('keydown' , closed)
+    })
+
   return ReactDOM.createPortal(
     <div className='modal-parent active'>
         <div className="details-modal">
