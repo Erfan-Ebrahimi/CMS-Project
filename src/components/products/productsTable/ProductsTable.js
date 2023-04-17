@@ -12,11 +12,13 @@ import {RiDeleteBin6Line} from 'react-icons/ri'
 import {AiOutlineEdit} from 'react-icons/ai'
 import img1 from '../../../images/prof1.jfif';
 import DetailsModal from '../../modals/detailsModal/DetailsModal';
+import EditModal from '../../modals/editModal/EditModal';
 
 const ProductsTable = () => {
 
   const [isShowDeleteModal , setIsShowDeleteModal] = useState(false)
   const [isShowDetailsModal , setIsShowDetailsModal] = useState(false)
+  const [isShowEditModal , setIsShowEditModal] = useState(false)
 
   const deleteModalSubmitAction = () => {
     console.log('red')
@@ -33,6 +35,18 @@ const ProductsTable = () => {
     setIsShowDetailsModal(false)
     console.log('DetailsModal closed');
   }
+
+  // for close EditModal
+  const closeEditModal = () => {
+    setIsShowEditModal(false)
+    console.log('EditModal closed');
+  }
+
+
+  const updateProductInfo = (event) => {
+    event.preventDefault();
+    console.log('update info');
+  } 
 
   return (
     <>
@@ -56,7 +70,7 @@ const ProductsTable = () => {
             <td className="align-middle">85</td>
             <td className="align-middle">
                 <button className='pt-btn btn btn-warning' onClick={() => setIsShowDetailsModal(true)}><GrCircleInformation/></button>
-                <button className='pt-btn btn btn-success'><AiOutlineEdit/></button>
+                <button className='pt-btn btn btn-success' onClick={() => setIsShowEditModal(true)}><AiOutlineEdit/></button>
                 <button className='pt-btn btn btn-danger' onClick={() => setIsShowDeleteModal(true)}><RiDeleteBin6Line/></button>
             </td>
           </tr>
@@ -65,6 +79,11 @@ const ProductsTable = () => {
 
       { isShowDeleteModal && <DeleteModal submitAction={deleteModalSubmitAction} cancelAction={deleteModalCancelAction} />}
       { isShowDetailsModal && <DetailsModal hideModal={closeDetailsModal}/>}
+      { isShowEditModal && 
+          <EditModal hideModal={closeEditModal} submitInfos={updateProductInfo}>
+            {/* CHILDREN */}
+          </EditModal>  
+      }
     </>
   )
 }
