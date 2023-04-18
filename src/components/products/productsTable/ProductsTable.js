@@ -1,13 +1,17 @@
 import { useState } from 'react';
 import './ProductsTable.scss';
 // ------------BOOTSTRAP--------------//
-import { Table } from 'react-bootstrap';
+import { Table , Form } from 'react-bootstrap';
 
 // -----------MODALS---------//
 import DeleteModal from '../../modals/deleteModal/DeleteModal';
 
 // -------------ICONS------------//
 import {GrCircleInformation} from 'react-icons/gr'
+import {AiOutlineStar} from 'react-icons/ai'
+import {BsCurrencyDollar} from 'react-icons/bs'
+import {MdOutlineColorLens} from 'react-icons/md'
+
 import {RiDeleteBin6Line} from 'react-icons/ri'
 import {AiOutlineEdit} from 'react-icons/ai'
 import img1 from '../../../images/prof1.jfif';
@@ -42,7 +46,7 @@ const ProductsTable = () => {
     console.log('EditModal closed');
   }
 
-
+  // for close EditModal
   const updateProductInfo = (event) => {
     event.preventDefault();
     console.log('update info');
@@ -81,7 +85,31 @@ const ProductsTable = () => {
       { isShowDetailsModal && <DetailsModal hideModal={closeDetailsModal}/>}
       { isShowEditModal && 
           <EditModal hideModal={closeEditModal} submitInfos={updateProductInfo}>
-            {/* CHILDREN */}
+            <Form className='edit-form'>
+
+              <Form.Group className="mb-3 edit-form-group">
+                <AiOutlineEdit className='edit-form-icon'/>
+                <Form.Control type="text" placeholder="عنوان جدید را وارد کنید" />
+              </Form.Group>
+
+              <Form.Group className="mb-3 edit-form-group">
+                <BsCurrencyDollar className='edit-form-icon'/>
+                <Form.Control type="text" placeholder="قیمت حدید را وارد کنید" />
+              </Form.Group>
+
+              <Form.Group className="mb-3 edit-form-group">
+                <AiOutlineStar className='edit-form-icon'/>
+                <Form.Control type="text" placeholder="موجودی جدید را وارد کنید" />
+              </Form.Group>
+
+              <Form.Group className="mb-3 edit-form-group">
+                <MdOutlineColorLens className='edit-form-icon'/>
+                <Form.Control type="text" placeholder="رنگ جدید را وارد کنید" />
+              </Form.Group>
+
+              
+            
+            </Form>
           </EditModal>  
       }
     </>

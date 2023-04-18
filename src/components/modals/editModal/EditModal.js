@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import './EditModal.scss';
 
 //hideModal az ProductsTable miad
-const EditModal = ({ hideModal , submitInfos }) => {
+const EditModal = ({ children , hideModal , submitInfos }) => {
 
     useEffect(() => {
         const closed = (event) => {
@@ -25,7 +25,8 @@ const EditModal = ({ hideModal , submitInfos }) => {
         <form className='edit-modal'>
             <button className='btn-close' onClick={hideModal}></button>
             <h1>اطلاعات جدید را وارد کنید</h1>
-
+            {/* CHILDREN */}
+            {children}
 
             <button className='btn edit-form-submit-btn' onClick={submitInfos}>ثبت اطلاعات</button>
         </form>
