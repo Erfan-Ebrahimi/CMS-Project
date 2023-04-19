@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState , useEffect } from 'react';
 import './ProductsTable.scss';
 // ------------BOOTSTRAP--------------//
 import { Table , Form } from 'react-bootstrap';
@@ -11,24 +11,35 @@ import {GrCircleInformation} from 'react-icons/gr'
 import {AiOutlineStar} from 'react-icons/ai'
 import {BsCurrencyDollar} from 'react-icons/bs'
 import {MdOutlineColorLens} from 'react-icons/md'
-
 import {RiDeleteBin6Line} from 'react-icons/ri'
 import {AiOutlineEdit} from 'react-icons/ai'
-import img1 from '../../../images/prof1.jfif';
 import DetailsModal from '../../modals/detailsModal/DetailsModal';
 import EditModal from '../../modals/editModal/EditModal';
+
+
+
 
 const ProductsTable = () => {
 
   const [isShowDeleteModal , setIsShowDeleteModal] = useState(false)
   const [isShowDetailsModal , setIsShowDetailsModal] = useState(false)
   const [isShowEditModal , setIsShowEditModal] = useState(false)
+  //----------state for all products -----------//
+  const [allProducts , setAllProducts] = useState([])
 
+  // -------GET data from API ----------------//
+  useEffect(() => {
+    fetch('http://localhost:8000/api/products/')
+      .then((res) => res.json())
+      .then((data) => setAllProducts(data))
+  } , [])
+
+  // for close DeleteModal $ submit
   const deleteModalSubmitAction = () => {
     console.log('red')
     setIsShowDeleteModal(false)
   }
-
+  // for close DeleteModal
   const deleteModalCancelAction = () => {
     console.log('blue')
     setIsShowDeleteModal(false)
@@ -64,20 +75,27 @@ const ProductsTable = () => {
               <th>تغییرات</th>
           </tr>
         </thead>
+        
         <tbody >
-          <tr className='pt-body'>
-            <td className="align-middle">
-                <img className='pt-img' src={img1} alt="img" />
-            </td>
-            <td className="align-middle">روغن</td>
-            <td className="align-middle">92000 تومان</td>
-            <td className="align-middle">85</td>
-            <td className="align-middle">
-                <button className='pt-btn btn btn-warning' onClick={() => setIsShowDetailsModal(true)}><GrCircleInformation/></button>
-                <button className='pt-btn btn btn-success' onClick={() => setIsShowEditModal(true)}><AiOutlineEdit/></button>
-                <button className='pt-btn btn btn-danger' onClick={() => setIsShowDeleteModal(true)}><RiDeleteBin6Line/></button>
-            </td>
-          </tr>
+
+          {allProducts.map((product) => {
+            return(
+                <tr className='pt-body' key={product.id}>
+                  <td className="align-middle">
+                      <img className='pt-img' src={product.img} alt="img" />
+                  </td>
+                  <td className="align-middle">{product.title}</td>
+                  <td className="align-middle">{product.price} تومان</td>
+                  <td className="align-middle">{product.count}</td>
+                  <td className="align-middle">
+                      <button className='pt-btn btn btn-warning' onClick={() => setIsShowDetailsModal(true)}><GrCircleInformation/></button>
+                      <button className='pt-btn btn btn-success' onClick={() => setIsShowEditModal(true)}><AiOutlineEdit/></button>
+                      <button className='pt-btn btn btn-danger' onClick={() => setIsShowDeleteModal(true)}><RiDeleteBin6Line/></button>
+                  </td>
+                </tr>
+            )
+          })}
+
         </tbody>
       </Table>
 
