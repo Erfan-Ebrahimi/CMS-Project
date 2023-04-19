@@ -30,8 +30,10 @@ const ProductsTable = () => {
   const [isShowEditModal , setIsShowEditModal] = useState(false)
   //state for all products
   const [allProducts , setAllProducts] = useState([])
+  //state for productID
+  const [productID , setProductID] = useState(null)
 
-  
+
   useEffect(() => {
     getAllProducts()
   } , [])
@@ -44,8 +46,15 @@ const ProductsTable = () => {
   }
   // for close DeleteModal $ submit
   const deleteModalSubmitAction = () => {
-    console.log('red')
-    setIsShowDeleteModal(false)
+
+    fetch(`http://localhost:8000/api/products/${productID}` , {
+      method:'DELETE'
+    })
+      .then(res => res.json())
+      .then(result => {
+        setIsShowDeleteModal(false)
+        getAllProducts() // show new data(products)
+      })
   }
   // for close DeleteModal
   const deleteModalCancelAction = () => {
@@ -100,7 +109,15 @@ const ProductsTable = () => {
                       <td className="align-middle">
                           <button className='pt-btn btn btn-warning' onClick={() => setIsShowDetailsModal(true)}><GrCircleInformation/></button>
                           <button className='pt-btn btn btn-success' onClick={() => setIsShowEditModal(true)}><AiOutlineEdit/></button>
-                          <button className='pt-btn btn btn-danger' onClick={() => setIsShowDeleteModal(true)}><RiDeleteBin6Line/></button>
+                          <button
+                           className='pt-btn btn btn-danger' 
+                           onClick={() => {
+                            setIsShowDeleteModal(true)
+                            setProductID(product.id)
+                           }}
+                          >
+                            <RiDeleteBin6Line/>
+                          </button>
                       </td>
                     </tr>
                 )
