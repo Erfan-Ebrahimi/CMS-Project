@@ -28,16 +28,20 @@ const ProductsTable = () => {
   const [isShowDeleteModal , setIsShowDeleteModal] = useState(false)
   const [isShowDetailsModal , setIsShowDetailsModal] = useState(false)
   const [isShowEditModal , setIsShowEditModal] = useState(false)
-  //----------state for all products -----------//
+  //state for all products
   const [allProducts , setAllProducts] = useState([])
 
-  // -------GET data from API ----------------//
+  
   useEffect(() => {
-    fetch('http://localhost:8000/api/products/')
-      .then((res) => res.json())
-      .then((data) => setAllProducts(data))
+    getAllProducts()
   } , [])
-
+  
+  // -------GET data from API----------------//
+  const getAllProducts = () => {
+    fetch('http://localhost:8000/api/products/')
+    .then((res) => res.json())
+    .then((data) => setAllProducts(data))
+  }
   // for close DeleteModal $ submit
   const deleteModalSubmitAction = () => {
     console.log('red')
