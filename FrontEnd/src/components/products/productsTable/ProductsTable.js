@@ -34,6 +34,8 @@ const ProductsTable = () => {
   const [allProducts , setAllProducts] = useState([])
   //state for productID
   const [productID , setProductID] = useState(null)
+  //state for har products (for DetailsModal & ...)
+  const [mainProductInfos , setMainProductInfos] = useState({})
 
   //-------------NOTIFAY-----------------//
   const notify = (type , msg) => {
@@ -45,7 +47,7 @@ const ProductsTable = () => {
       toast.warning(msg)
     }
   }
-  
+  //dar kol talash mikonim ta hade momken kamtar darkhast befrestim samt server masalan for EditModal az hamin state allProducts estefadeh mikonim
   useEffect(() => {
     getAllProducts()
   } , [])
@@ -67,14 +69,13 @@ const ProductsTable = () => {
       .then(result => {
         setIsShowDeleteModal(false)
         getAllProducts() // show new data(products)
+        notify('success' , '++ محصول با موفقیت حذف شد ++')
       })
   }
   // for close DeleteModal
   const deleteModalCancelAction = () => {
     console.log('blue')
     setIsShowDeleteModal(false)
-    notify('success' , '++ محصول با موفقیت حذف شد ++')
-
   }
 
   // for close DetailsModal
@@ -122,7 +123,15 @@ const ProductsTable = () => {
                       <td className="align-middle">{product.price} تومان</td>
                       <td className="align-middle">{product.count}</td>
                       <td className="align-middle">
-                          <button className='pt-btn btn btn-warning' onClick={() => setIsShowDetailsModal(true)}><GrCircleInformation/></button>
+                          <button 
+                            className='pt-btn btn btn-warning' 
+                            onClick={() => {
+                              setIsShowDetailsModal(true)
+                              setMainProductInfos(product)//khode product ro set mikonim
+                            }}
+                          >
+                            <GrCircleInformation/>
+                          </button>
                           <button className='pt-btn btn btn-success' onClick={() => setIsShowEditModal(true)}><AiOutlineEdit/></button>
                           <button
                            className='pt-btn btn btn-danger' 
@@ -146,7 +155,32 @@ const ProductsTable = () => {
       }
 
       { isShowDeleteModal && <DeleteModal submitAction={deleteModalSubmitAction} cancelAction={deleteModalCancelAction} />}
-      { isShowDetailsModal && <DetailsModal hideModal={closeDetailsModal}/>}
+      { isShowDetailsModal && 
+        <DetailsModal>
+          <button type="button" className="btn-close" aria-label="Close" onClick={closeDetailsModal}></button>
+            <Table striped bordered hover variant='dark'>
+                <thead>
+                    <tr>
+                        <th>نام محصول</th>
+                        <th>محبوبیت</th>
+                        <th>فروش</th>
+                        <th>موجودی</th>
+                        <th>تعداد رنگ بندی</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{mainProductInfos.title}</td>
+                        <td>% {mainProductInfos.popularity}</td>
+                        <td>{mainProductInfos.sale}</td>
+                        <td>{mainProductInfos.count} عدد</td>
+                        <td>{mainProductInfos.colors}</td>
+                        
+                    </tr>
+                </tbody>
+            </Table>
+        </DetailsModal>
+      }
       { isShowEditModal && 
           <EditModal hideModal={closeEditModal} submitInfos={updateProductInfo}>
             <Form className='edit-form'>
@@ -182,4 +216,4 @@ const ProductsTable = () => {
   )
 }
 
-export default ProductsTable
+export default ProductsTable;
