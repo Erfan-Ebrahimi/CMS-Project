@@ -1,5 +1,8 @@
 @import '../../../style/sass/variables.scss';
-
+@font-face {
+  font-family: naz;
+  src: url(../../../style/fonts/nazanin.ttf);
+}
 .products-table{
     width: 100%;
     margin-top: 30px;
@@ -31,4 +34,22 @@
         margin-left: 5px;
         color: black !important;
     }
-}
+  }
+  //--------TOASTIFY STYLE------------//
+  .toastBody {
+    font-family: "naz";
+    color: #10171D;
+    font-size: 1rem !important;
+    // direction: rtl;
+    text-align: center;
+  }
+
+  .Toastify__toast--warning {
+    background: #FFE8BC !important;
+  }
+  .Toastify__toast--error {
+    background: #FCA7A9 !important;
+  }
+  .Toastify__toast--success {
+    background: #aedfa4 !important;
+  }

@@ -3,6 +3,8 @@ import './ProductsTable.scss';
 
 //-------------COMPONENTS-------------//
 import ErrorBox from '../../errorBox/ErrorBox';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 // ------------BOOTSTRAP--------------//
 import { Table , Form } from 'react-bootstrap';
@@ -33,7 +35,17 @@ const ProductsTable = () => {
   //state for productID
   const [productID , setProductID] = useState(null)
 
-
+  //-------------NOTIFAY-----------------//
+  const notify = (type , msg) => {
+    if(type === 'success'){
+      toast.success(msg)
+    }else if(type === 'error'){
+      toast.error(msg)
+    }else{
+      toast.warning(msg)
+    }
+  }
+  
   useEffect(() => {
     getAllProducts()
   } , [])
@@ -44,6 +56,7 @@ const ProductsTable = () => {
     .then((res) => res.json())
     .then((data) => setAllProducts(data))
   }
+  
   // for close DeleteModal $ submit
   const deleteModalSubmitAction = () => {
 
@@ -60,6 +73,8 @@ const ProductsTable = () => {
   const deleteModalCancelAction = () => {
     console.log('blue')
     setIsShowDeleteModal(false)
+    notify('success' , '++ محصول با موفقیت حذف شد ++')
+
   }
 
   // for close DetailsModal
@@ -124,6 +139,7 @@ const ProductsTable = () => {
               })}
             </tbody>
           </Table>
+          
         )
         :
         (<ErrorBox msg='هیچ محصولی یافت نشد !!'/>)
@@ -160,6 +176,8 @@ const ProductsTable = () => {
             </Form>
           </EditModal>  
       }
+      {/* ---------TOSTIFY-------------- */}
+      <ToastContainer progressClassName="toastProgress" bodyClassName="toastBody"></ToastContainer>
     </>
   )
 }
