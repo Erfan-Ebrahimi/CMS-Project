@@ -120,7 +120,7 @@ const ProductsTable = () => {
                           <img className='pt-img' src={product.img} alt="img" />
                       </td>
                       <td className="align-middle">{product.title}</td>
-                      <td className="align-middle">{product.price} تومان</td>
+                      <td className="align-middle">{Number(product.price).toLocaleString()} تومان</td>
                       <td className="align-middle">{product.count}</td>
                       <td className="align-middle">
                           <button 
@@ -172,7 +172,7 @@ const ProductsTable = () => {
                     <tr>
                         <td>{mainProductInfos.title}</td>
                         <td>% {mainProductInfos.popularity}</td>
-                        <td>{mainProductInfos.sale}</td>
+                        <td>{Number(mainProductInfos.sale).toLocaleString()}</td>
                         <td>{mainProductInfos.count} عدد</td>
                         <td>{mainProductInfos.colors}</td>
                         
