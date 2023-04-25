@@ -1,7 +1,7 @@
 import { useState , useEffect } from 'react';
 import './ProductsTable.scss';
 
-//-------------COMPONENTS-------------//
+// -------------COMPONENTS-------------//
 import ErrorBox from '../../errorBox/ErrorBox';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
@@ -9,18 +9,22 @@ import "react-toastify/dist/ReactToastify.css";
 // ------------BOOTSTRAP--------------//
 import { Table , Form } from 'react-bootstrap';
 
-// -----------MODALS---------//
+// -----------------MODALS------------//
 import DeleteModal from '../../modals/deleteModal/DeleteModal';
+import DetailsModal from '../../modals/detailsModal/DetailsModal';
+import EditModal from '../../modals/editModal/EditModal';
 
-// -------------ICONS------------//
+// -------------ICONS----------------//
 import {GrCircleInformation} from 'react-icons/gr'
 import {AiOutlineStar} from 'react-icons/ai'
 import {BsCurrencyDollar} from 'react-icons/bs'
 import {MdOutlineColorLens} from 'react-icons/md'
 import {RiDeleteBin6Line} from 'react-icons/ri'
 import {AiOutlineEdit} from 'react-icons/ai'
-import DetailsModal from '../../modals/detailsModal/DetailsModal';
-import EditModal from '../../modals/editModal/EditModal';
+import {TbAlphabetLatin} from 'react-icons/tb'
+import {ImListNumbered} from 'react-icons/im'
+import {BiImageAdd} from 'react-icons/bi'
+import {RiNumbersLine} from 'react-icons/ri'
 
 
 
@@ -36,6 +40,15 @@ const ProductsTable = () => {
   const [productID , setProductID] = useState(null)
   //state for har products (for DetailsModal & ...)
   const [mainProductInfos , setMainProductInfos] = useState({})
+
+  //states for EditModal inputs => bayad harkodam state joda dashte bashand
+const [productNewTitle , setProductNewTitle] = useState('')
+const [productNewPrice , setProductNewPrice] = useState('')
+const [productNewCount , setProductNewCount] = useState('')
+const [productNewImg , setProductNewImg] = useState('')
+const [productNewPopularity , setProductNewPopularity] = useState('')
+const [productNewSale , setProductNewSale] = useState('')
+const [productNewColors , setProductNewColors] = useState('')
 
   //-------------NOTIFAY-----------------//
   const notify = (type , msg) => {
@@ -84,21 +97,43 @@ const ProductsTable = () => {
     console.log('DetailsModal closed');
   }
 
-  // for close EditModal
+  // for closeBtn EditModal
   const closeEditModal = () => {
     setIsShowEditModal(false)
     console.log('EditModal closed');
   }
 
-  // for close EditModal
+  // for submit EditModal
   const updateProductInfo = (event) => {
     event.preventDefault();
-    console.log('update info');
+
+    const newData = {
+      title :productNewTitle,
+      price :productNewPrice,
+      count :productNewCount,
+      img :productNewImg,
+      popularity :productNewPopularity,
+      sale :productNewSale,
+      colors :productNewColors
+    }
+
+    fetch(`http://localhost:8000/api/products/${productID}`,{
+      method:'PUT',
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newData)
+    })
+    .then((res) => res.json())
+    .then((result) => {
+        console.log(result)
+        setIsShowEditModal(false)
+        getAllProducts()
+      })
   } 
 
   return (
     <>
-          
       {allProducts.length ? 
         (
           <Table bordered hover className='products-table'>
@@ -132,7 +167,22 @@ const ProductsTable = () => {
                           >
                             <GrCircleInformation/>
                           </button>
-                          <button className='pt-btn btn btn-success' onClick={() => setIsShowEditModal(true)}><AiOutlineEdit/></button>
+                          <button 
+                            className='pt-btn btn btn-success' 
+                            onClick={() => {
+                              setProductID(product.id)
+                              setIsShowEditModal(true)
+                              setProductNewTitle(product.title)
+                              setProductNewPrice(Number(product.price).toLocaleString())
+                              setProductNewCount(product.count)
+                              setProductNewImg(product.img)
+                              setProductNewPopularity(product.popularity)
+                              setProductNewSale(Number(product.sale).toLocaleString())
+                              setProductNewColors(product.colors)
+                            }}
+                          >
+                            <AiOutlineEdit/>
+                          </button>
                           <button
                            className='pt-btn btn btn-danger' 
                            onClick={() => {
@@ -183,31 +233,78 @@ const ProductsTable = () => {
       }
       { isShowEditModal && 
           <EditModal hideModal={closeEditModal} submitInfos={updateProductInfo}>
-            <Form className='edit-form'>
+            <div className='edit-form'>
 
               <Form.Group className="mb-3 edit-form-group">
-                <AiOutlineEdit className='edit-form-icon'/>
-                <Form.Control type="text" placeholder="عنوان جدید را وارد کنید" />
+                <TbAlphabetLatin className='edit-form-icon'/>
+                <Form.Control 
+                  type="text" 
+                  value={productNewTitle}
+                  placeholder="عنوان جدید را وارد کنید" 
+                  onChange={(event) => setProductNewTitle(event.target.value)}
+                />
               </Form.Group>
 
               <Form.Group className="mb-3 edit-form-group">
                 <BsCurrencyDollar className='edit-form-icon'/>
-                <Form.Control type="text" placeholder="قیمت حدید را وارد کنید" />
+                <Form.Control 
+                  type="text" 
+                  value={productNewPrice}
+                  placeholder="قیمت حدید را وارد کنید" 
+                  onChange={(event) => setProductNewPrice(event.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3 edit-form-group">
+                <ImListNumbered className='edit-form-icon'/>
+                <Form.Control 
+                  type="text" 
+                  value={productNewCount}
+                  placeholder="موجودی جدید را وارد کنید"
+                  onChange={(event) => setProductNewCount(event.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3 edit-form-group">
+                <BiImageAdd className='edit-form-icon'/>
+                <Form.Control 
+                  type="text" 
+                  value={productNewImg}
+                  placeholder="آدرس کاور جدید را وارد کنید"
+                  onChange={(event) => setProductNewImg(event.target.value)} 
+                />
               </Form.Group>
 
               <Form.Group className="mb-3 edit-form-group">
                 <AiOutlineStar className='edit-form-icon'/>
-                <Form.Control type="text" placeholder="موجودی جدید را وارد کنید" />
+                <Form.Control 
+                  type="text" 
+                  value={productNewPopularity + '%'}
+                  placeholder="میزان محبوبیت جدید را وارد کنید"
+                  onChange={(event) => setProductNewPopularity(event.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3 edit-form-group">
+                <RiNumbersLine className='edit-form-icon'/>
+                <Form.Control 
+                  type="text" 
+                  value={productNewSale}
+                  placeholder="میزان فروش جدید را وارد کنید"
+                  onChange={(event) => setProductNewSale(event.target.value)} />
               </Form.Group>
 
               <Form.Group className="mb-3 edit-form-group">
                 <MdOutlineColorLens className='edit-form-icon'/>
-                <Form.Control type="text" placeholder="رنگ جدید را وارد کنید" />
+                <Form.Control 
+                  type="text" 
+                  value={productNewColors}
+                  placeholder="رنگ جدید را وارد کنید"
+                  onChange={(event) => setProductNewColors(event.target.value)}
+                />
               </Form.Group>
 
-              
-            
-            </Form>
+            </div>
           </EditModal>  
       }
       {/* ---------TOSTIFY-------------- */}

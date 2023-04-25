@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import './EditModal.scss';
+import { Form } from 'react-bootstrap';
 
 //hideModal az ProductsTable miad
 const EditModal = ({ children , hideModal , submitInfos }) => {
@@ -22,14 +23,14 @@ const EditModal = ({ children , hideModal , submitInfos }) => {
 
   return (
     <div className='modal-parent active'>
-        <form className='edit-modal'>
+        <Form className='edit-modal'>
             <button className='btn-close' onClick={hideModal}></button>
             <h1>اطلاعات جدید را وارد کنید</h1>
             {/* CHILDREN */}
             {children}
 
             <button className='btn edit-form-submit-btn' onClick={submitInfos}>ثبت اطلاعات</button>
-        </form>
+        </Form>
     </div>
   )
 }
