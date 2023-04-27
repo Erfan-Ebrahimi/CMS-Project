@@ -12,6 +12,20 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+// app.use(function(req, res, next) {
+//     // set the Access-Control-Allow-Origin header to allow requests from any domain
+//     res.header("Access-Control-Allow-Origin", "*");
+//     // set the Access-Control-Allow-Methods header to allow the HTTP methods GET, POST, PUT, and DELETE
+//     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+//     // set the Access-Control-Allow-Headers header to allow the Content-Type header to be sent
+//     res.header("Access-Control-Allow-Headers", "Content-Type");
+//     next();
+//   });
+  
+//   // route to handle GET requests to /api/products
+//   app.get('/api/products', function(req, res) {
+//     // handle the GET request here and send a response to the client
+//   });
 
 app.use('/api/products', productsRouter)
 app.use('/api/comments', commentsRouter)
