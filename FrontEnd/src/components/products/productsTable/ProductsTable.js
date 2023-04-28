@@ -1,9 +1,8 @@
-import { useState , useEffect } from 'react';
+import { useState } from 'react';
 import './ProductsTable.scss';
 
 // -------------COMPONENTS-------------//
 import ErrorBox from '../../errorBox/ErrorBox';
-import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
 // ------------BOOTSTRAP--------------//
@@ -29,7 +28,7 @@ import {RiNumbersLine} from 'react-icons/ri'
 
 
 
-const ProductsTable = ({allProducts , getAllProducts}) => {
+const ProductsTable = ({allProducts , getAllProducts , notify}) => {
 
   const [isShowDeleteModal , setIsShowDeleteModal] = useState(false)
   const [isShowDetailsModal , setIsShowDetailsModal] = useState(false)
@@ -41,25 +40,13 @@ const ProductsTable = ({allProducts , getAllProducts}) => {
   const [mainProductInfos , setMainProductInfos] = useState({})
 
   //states for EditModal inputs => bayad harkodam state joda dashte bashand
-const [productNewTitle , setProductNewTitle] = useState('')
-const [productNewPrice , setProductNewPrice] = useState('')
-const [productNewCount , setProductNewCount] = useState('')
-const [productNewImg , setProductNewImg] = useState('')
-const [productNewPopularity , setProductNewPopularity] = useState('')
-const [productNewSale , setProductNewSale] = useState('')
-const [productNewColors , setProductNewColors] = useState('')
-
-  //-------------NOTIFAY-----------------//
-  const notify = (type , msg) => {
-    if(type === 'success'){
-      toast.success(msg)
-    }else if(type === 'error'){
-      toast.error(msg)
-    }else{
-      toast.warning(msg)
-    }
-  }
-  //dar kol talash mikonim ta hade momken kamtar darkhast befrestim samt server masalan for EditModal az hamin state allProducts estefadeh mikonim
+  const [productNewTitle , setProductNewTitle] = useState('')
+  const [productNewPrice , setProductNewPrice] = useState('')
+  const [productNewCount , setProductNewCount] = useState('')
+  const [productNewImg , setProductNewImg] = useState('')
+  const [productNewPopularity , setProductNewPopularity] = useState('')
+  const [productNewSale , setProductNewSale] = useState('')
+  const [productNewColors , setProductNewColors] = useState('')
  
   
   // for close DeleteModal $ submit
@@ -119,6 +106,7 @@ const [productNewColors , setProductNewColors] = useState('')
         console.log(result)
         setIsShowEditModal(false)
         getAllProducts()
+        notify('success' , '++ محصول با موفقیت ویرایش شد ++')
       })
   } 
 
@@ -297,8 +285,6 @@ const [productNewColors , setProductNewColors] = useState('')
             </div>
           </EditModal>  
       }
-      {/* ---------TOSTIFY-------------- */}
-      <ToastContainer progressClassName="toastProgress" bodyClassName="toastBody"></ToastContainer>
     </>
   )
 }

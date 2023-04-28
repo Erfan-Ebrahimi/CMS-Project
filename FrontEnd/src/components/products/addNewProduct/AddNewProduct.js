@@ -12,7 +12,7 @@ import { useState } from 'react';
 
 
 
-const AddNewProduct = ({getAllProducts}) => {
+const AddNewProduct = ({ getAllProducts , notify }) => {
 
     const [newProductTitle , setNewProductTitle] = useState('')
     const [newProductPrice , setNewProductPrice] = useState('')
@@ -46,7 +46,8 @@ const AddNewProduct = ({getAllProducts}) => {
         .then((result) => {
             console.log(result);
             getAllProducts();
-            emptyInputs()
+            emptyInputs();
+            notify('success' , '++ محصول با موفقیت اضافه شد ++')
 
         })
         .catch(error => console.log('Error:', error));
