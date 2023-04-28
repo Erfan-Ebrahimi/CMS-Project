@@ -12,7 +12,7 @@ import { useState } from 'react';
 
 
 
-const AddNewProduct = () => {
+const AddNewProduct = ({getAllProducts}) => {
 
     const [newProductTitle , setNewProductTitle] = useState('')
     const [newProductPrice , setNewProductPrice] = useState('')
@@ -45,10 +45,22 @@ const AddNewProduct = () => {
         .then((res) => res.json())
         .then((result) => {
             console.log(result);
+            getAllProducts();
+            emptyInputs()
 
         })
         .catch(error => console.log('Error:', error));
          
+    }
+
+    const emptyInputs = () => {
+        setNewProductTitle('');
+        setNewProductPrice('');
+        setNewProductCount('');
+        setNewProductImg('');
+        setNewProductPopularity('');
+        setNewProductSale('');
+        setNewProductColors('');
     }
 
     

@@ -29,13 +29,12 @@ import {RiNumbersLine} from 'react-icons/ri'
 
 
 
-const ProductsTable = () => {
+const ProductsTable = ({allProducts , getAllProducts}) => {
 
   const [isShowDeleteModal , setIsShowDeleteModal] = useState(false)
   const [isShowDetailsModal , setIsShowDetailsModal] = useState(false)
   const [isShowEditModal , setIsShowEditModal] = useState(false)
-  //state for all products
-  const [allProducts , setAllProducts] = useState([])
+
   //state for productID
   const [productID , setProductID] = useState(null)
   //state for har products (for DetailsModal & ...)
@@ -61,16 +60,7 @@ const [productNewColors , setProductNewColors] = useState('')
     }
   }
   //dar kol talash mikonim ta hade momken kamtar darkhast befrestim samt server masalan for EditModal az hamin state allProducts estefadeh mikonim
-  useEffect(() => {
-    getAllProducts()
-  } , [])
-  
-  // -------GET data from API----------------//
-  const getAllProducts = () => {
-    fetch('http://localhost:8000/api/products/')
-    .then((res) => res.json())
-    .then((data) => setAllProducts(data))
-  }
+ 
   
   // for close DeleteModal $ submit
   const deleteModalSubmitAction = () => {
