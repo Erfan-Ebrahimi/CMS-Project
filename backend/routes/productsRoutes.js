@@ -37,8 +37,8 @@ productsRouter.put("/:productID", (req, res) => {
   let body = req.body;
   let productID = req.params.productID;
 
-  let updateProductQuery = `UPDATE Products SET title="${body.title}", price=${body.price}, count=${body.count} ,img="${body.img}",popularity=${body.popularity},sale=${body.sale},colors=${body.colors} WHERE id = ${productID}`;
-  SabzlearnShopDB.query(updateProductQuery, (err, result) => {
+  let updateProductQuery = `UPDATE Products SET title=?, price=?, count=?, img=?, popularity=?, sale=?, colors=? WHERE id = ?`;
+  SabzlearnShopDB.query(updateProductQuery, [body.title, body.price, body.count, body.img, body.popularity, body.sale, body.colors, productID], (err, result) => {
     if (err) {
       console.log(err);
       res.send(null);
