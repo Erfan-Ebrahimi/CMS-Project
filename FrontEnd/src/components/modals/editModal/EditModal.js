@@ -23,13 +23,13 @@ const EditModal = ({ children , hideModal , submitInfos }) => {
 
   return (
     <div className='modal-parent active'>
-        <Form className='edit-modal'>
+        <Form className='edit-modal' method='#' onSubmit={submitInfos}>
             <button className='btn-close' onClick={hideModal}></button>
             <h1>اطلاعات جدید را وارد کنید</h1>
             {/* CHILDREN */}
             {children}
 
-            <button className='btn edit-form-submit-btn' onClick={submitInfos}>ثبت اطلاعات</button>
+            <button className='btn edit-form-submit-btn' type='submit'>ثبت اطلاعات</button>
         </Form>
     </div>
   )
