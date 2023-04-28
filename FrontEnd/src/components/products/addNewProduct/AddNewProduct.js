@@ -33,32 +33,8 @@ const AddNewProduct = () => {
     }
 
     const addNewProduct =async (event) => {
-        console.log(JSON.stringify(newProductInfos));
         event.preventDefault()
 
-            // try {
-            //     const response = await axios.post('http://localhost:8000/api/products/', newProductInfos);
-            //     console.log(response.data);
-            // } catch (error) {
-            //     console.error(error);
-            // }
-        // try {
-        //     const res = await fetch(`http://localhost:8000/api/products/`, {
-        //         method: 'POST',
-        //         body: JSON.stringify(newProductInfos),
-        //         headers:{
-        //             'Content-Type':'text/html; charset=utf-8'
-        //         }  
-        //     });
-            
-        //     const data = await res.json();
-        //     console.log(data);
-        // } catch (error) {
-        //     console.log('Error:', error);
-        // } 
-        // try{
-
-        // }
         fetch('http://localhost:8000/api/products/' , {
             method: 'POST',
             body: JSON.stringify(newProductInfos),
@@ -66,9 +42,11 @@ const AddNewProduct = () => {
                 'Content-Type':'application/json'
             }  
         })
-        .then((res) => res.json()) // تبدیل متن پاسخ به یک متن معمولی
-        // .then(json => JSON.parse(json)) // تبدیل متن پاسخ به یک JSON
-        .then(data => console.log(data)) // نمایش دادن پاسخ دریافت شده به صورت JSON
+        .then((res) => res.json())
+        .then((result) => {
+            console.log(result);
+
+        })
         .catch(error => console.log('Error:', error));
          
     }
