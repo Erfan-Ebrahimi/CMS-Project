@@ -1,6 +1,24 @@
 .comments-table{
     margin-top: 60px;
 }
-.btn{
+.btn-EDIT{
     margin-right: 5px;
+}
+
+.details-comments-modal{
+    width: 400px;
+    
+    p{
+        font-size: 1.4rem;
+        padding: 15px;
+        border-radius: 10px;
+        // background: rgb(161, 170, 224);
+        box-shadow: 5px 4px 8px -3px rgb(102, 5, 230);
+    }
+
+    .closeBTN{
+        margin-top: 20px;
+        width: 50%;
+        background: rgb(50, 86, 205);
+    }
 }
