@@ -1,11 +1,15 @@
 import { useState , useEffect } from 'react';
 import './Comments.scss';
+// ---------------BOOTSTRAP-------------------//
+import { Form } from 'react-bootstrap';
 
 // --------------COMPONENTS-------------------//
 import {Table} from 'react-bootstrap';
 import ErrorBox from '../errorBox/ErrorBox';
 import DetailsModal from '../modals/detailsModal/DetailsModal';
 import DeleteModal from '../modals/deleteModal/DeleteModal';
+import EditModal from '../modals/editModal/EditModal';
+
 
 
 const Comments = () => {
@@ -17,6 +21,7 @@ const Comments = () => {
 
   const [isShowDetailsModal , setIsShowDetailsModal] = useState(false)
   const [isShowDeleteModal , setIsShowDeleteModal] = useState(false)
+  const [isShowEditModal , setIsShowEditModal] = useState(false)
 
 
   // ------------ get all comments -----------//
@@ -47,6 +52,35 @@ const Comments = () => {
       console.log('comment deleted');
       getAllComments()
     })
+  }
+
+  //for close EditModal
+  const closeEditModal = (e) => {
+    e.preventDefault();
+    setIsShowEditModal(false);
+  }
+  //for submit EditModal
+  const submitEditModal = (e) => {
+    e.preventDefault();
+    fetch(`http://localhost:8000/api/comments/${commentID}` , {
+      method:'PUT',
+      headers:{
+        'Content-Type' : 'application/json'
+      },
+      body:JSON.stringify({
+        body:mainCommentBody //value textarea
+      })
+    })
+    .then(res => res.json())
+    .then((result) => {
+      console.log(result);
+      setIsShowDeleteModal(false);
+      console.log('comment updated');
+      getAllComments();
+    })
+    
+    setIsShowEditModal(false);
+    console.log('reddddddddddd');
   }
 
   return (
@@ -98,6 +132,11 @@ const Comments = () => {
                       </button>
                       <button 
                         className='btn btn-primary btn-EDIT'
+                        onClick={() => {
+                          setIsShowEditModal(true)
+                          setMainCommentBody(comment.body)
+                          setCommentID(comment.id)
+                        }}
                       >
                         ویرایش  
                       </button>
@@ -139,6 +178,19 @@ const Comments = () => {
       {/* ----------DELETE MODAL---------- */}
       {isShowDeleteModal && (
         <DeleteModal submitAction={submitDeleteModal} cancelAction={cancelDeleteModal} />
+      )}
+
+      {/* ----------EDIT MODAL---------- */}
+      {isShowEditModal && (
+        <EditModal hideModal={closeEditModal} submitInfos={submitEditModal}>
+            <Form.Control
+              as="textarea"
+              placeholder="Leave a comment here"
+              style={{ height: '100px' }}
+              value={mainCommentBody}
+              onChange={(event) => setMainCommentBody(event.target.value)}
+            />
+        </EditModal>
       )}
     </div>
   );
