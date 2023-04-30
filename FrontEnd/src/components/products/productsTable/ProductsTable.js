@@ -182,7 +182,13 @@ const ProductsTable = ({allProducts , getAllProducts , notify}) => {
         (<ErrorBox msg='هیچ محصولی یافت نشد !!'/>)
       }
 
-      { isShowDeleteModal && <DeleteModal submitAction={deleteModalSubmitAction} cancelAction={deleteModalCancelAction} />}
+      { isShowDeleteModal && 
+        <DeleteModal 
+          submitAction={deleteModalSubmitAction} 
+          cancelAction={deleteModalCancelAction}
+          title='آیا از حذف اطمینان دارید ؟' 
+        />
+      }
       { isShowDetailsModal && 
         <DetailsModal>
           <button type="button" className="btn-close" aria-label="Close" onClick={closeDetailsModal}></button>
