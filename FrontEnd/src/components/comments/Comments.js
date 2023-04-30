@@ -22,6 +22,8 @@ const Comments = () => {
   const [isShowDetailsModal , setIsShowDetailsModal] = useState(false)
   const [isShowDeleteModal , setIsShowDeleteModal] = useState(false)
   const [isShowEditModal , setIsShowEditModal] = useState(false)
+  const [isShowAcceptModal , setIsShowAcceptModal] = useState(false)
+
 
 
   // ------------ get all comments -----------//
@@ -73,15 +75,23 @@ const Comments = () => {
     })
     .then(res => res.json())
     .then((result) => {
-      console.log(result);
-      setIsShowDeleteModal(false);
-      console.log('comment updated');
+      console.log(result , 'comment updated');
+      setIsShowEditModal(false);
       getAllComments();
-    })
-    
-    setIsShowEditModal(false);
-    console.log('reddddddddddd');
+    })    
   }
+
+  //for submit AcceptModal
+  const submitAcceptModal = () => {
+    setIsShowAcceptModal(false)
+
+  }
+  //for cancel AcceptModal
+  const cancelAcceptModal = () => {
+    setIsShowAcceptModal(false)
+    
+  }
+
 
   return (
 
@@ -147,6 +157,9 @@ const Comments = () => {
                       </button>
                       <button 
                         className='btn btn-success btn-EDIT'
+                        onClick={() => {
+                          setIsShowAcceptModal(true)
+                        }}
                       >
                         تایید  
                       </button>
@@ -177,7 +190,11 @@ const Comments = () => {
 
       {/* ----------DELETE MODAL---------- */}
       {isShowDeleteModal && (
-        <DeleteModal submitAction={submitDeleteModal} cancelAction={cancelDeleteModal} />
+        <DeleteModal 
+          submitAction={submitDeleteModal} 
+          cancelAction={cancelDeleteModal} 
+          title='آیا از حذف اطمینان دارید ؟' 
+        />
       )}
 
       {/* ----------EDIT MODAL---------- */}
@@ -191,6 +208,15 @@ const Comments = () => {
               onChange={(event) => setMainCommentBody(event.target.value)}
             />
         </EditModal>
+      )}
+      {/* ----------ACCEPT MODAL---------- */}
+      {/*for accepModal az DeleteModal estefadeh mikonim */}
+      {isShowAcceptModal && (
+        <DeleteModal
+          cancelAction={cancelAcceptModal}
+          submitAction={submitAcceptModal}
+          title='آیا از تایید اطمینان دارید ؟'
+        />
       )}
     </div>
   );
