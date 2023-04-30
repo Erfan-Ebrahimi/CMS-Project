@@ -10,6 +10,9 @@ import DetailsModal from '../modals/detailsModal/DetailsModal';
 import DeleteModal from '../modals/deleteModal/DeleteModal';
 import EditModal from '../modals/editModal/EditModal';
 
+//-------------------ICONS--------------------//
+import {TiTickOutline} from 'react-icons/ti'
+import {BsFillEyeFill} from 'react-icons/bs'
 
 
 const Comments = () => {
@@ -23,6 +26,7 @@ const Comments = () => {
   const [isShowDeleteModal , setIsShowDeleteModal] = useState(false)
   const [isShowEditModal , setIsShowEditModal] = useState(false)
   const [isShowAcceptModal , setIsShowAcceptModal] = useState(false)
+  const [isShowRejectModal , setIsShowRejectModal] = useState(false)
 
 
 
@@ -83,12 +87,41 @@ const Comments = () => {
 
   //for submit AcceptModal
   const submitAcceptModal = () => {
-    setIsShowAcceptModal(false)
+    fetch(`http://localhost:8000/api/comments/accept/${commentID}` , {
+      method:'POST',
+    })
+    .then(res => res.json())
+    .then((result) => {
+      console.log(result)
+      setIsShowAcceptModal(false)
+      console.log('comment ACCEPTED');
+      getAllComments()
+    })
 
   }
   //for cancel AcceptModal
   const cancelAcceptModal = () => {
     setIsShowAcceptModal(false)
+    
+  }
+
+  //for submit RejecttModal
+  const submitRejectModal = () => {
+    fetch(`http://localhost:8000/api/comments/reject/${commentID}` , {
+      method:'POST',
+    })
+    .then(res => res.json())
+    .then((result) => {
+      console.log(result)
+      setIsShowRejectModal(false)
+      console.log('comment rejected');
+      getAllComments()
+    })
+
+  }
+   //for cancel RejectModal
+   const cancelRejectModal = () => {
+    setIsShowRejectModal(false)
     
   }
 
@@ -113,7 +146,7 @@ const Comments = () => {
             <tbody>
               {allComments.map((comment) => {
                 return(
-                  <tr key={comment.id}>
+                  <tr key={comment.id} className={comment.isAccept ? ('e1') : ('e2')}>
                     <td>{comment.id}</td>
                     <td>{comment.userID}</td>
                     <td>{comment.productID}</td>
@@ -125,7 +158,7 @@ const Comments = () => {
                           setIsShowDetailsModal(true)
                         }}
                       >
-                        مشاهده متن
+                        <BsFillEyeFill/>
                       </button>
                     </td>
                     <td>{comment.date}</td>
@@ -155,14 +188,32 @@ const Comments = () => {
                       >
                         پاسخ  
                       </button>
-                      <button 
-                        className='btn btn-success btn-EDIT'
-                        onClick={() => {
-                          setIsShowAcceptModal(true)
-                        }}
-                      >
-                        تایید  
-                      </button>
+                      {comment.isAccept ? 
+                        (
+                          <button 
+                            className='btn btn-danger btn-EDIT'
+                            onClick={() => {
+                              setIsShowRejectModal(true)
+                              setCommentID(comment.id)
+                            }}
+                          >
+                            رد
+                          </button>
+                        )
+                        :
+                        (
+                          <button 
+                            className='btn btn-success btn-EDIT'
+                            onClick={() => {
+                              setIsShowAcceptModal(true)
+                              setCommentID(comment.id)
+                            }}
+                          >
+                          تایید  
+                          </button>
+                        )
+                      }
+                      
                     </td>
                   </tr>
                 )})}
@@ -216,6 +267,15 @@ const Comments = () => {
           cancelAction={cancelAcceptModal}
           submitAction={submitAcceptModal}
           title='آیا از تایید اطمینان دارید ؟'
+        />
+      )}
+      {/* ----------REJECT MODAL---------- */}
+      {/*for RejectModal az DeleteModal estefadeh mikonim */}
+      {isShowRejectModal && (
+        <DeleteModal
+          cancelAction={cancelRejectModal}
+          submitAction={submitRejectModal}
+          title='آیا از رد اطمینان دارید ؟'
         />
       )}
     </div>
