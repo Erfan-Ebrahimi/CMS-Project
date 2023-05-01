@@ -11,7 +11,6 @@ import DeleteModal from '../modals/deleteModal/DeleteModal';
 import EditModal from '../modals/editModal/EditModal';
 
 //-------------------ICONS--------------------//
-import {TiTickOutline} from 'react-icons/ti'
 import {BsFillEyeFill} from 'react-icons/bs'
 
 
