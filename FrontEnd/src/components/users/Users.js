@@ -3,7 +3,7 @@ import './Users.scss';
 
 //----------MUI-------------//
 import { DataGrid } from '@mui/x-data-grid';
-import { Table , Button } from '@mui/material';
+import { Table , Button , TextField , Box } from '@mui/material';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -16,16 +16,30 @@ import Paper from '@mui/material/Paper';
 import ErrorBox from '../errorBox/ErrorBox';
 import DeleteModal from '../modals/deleteModal/DeleteModal';
 import DetailsModal from '../modals/detailsModal/DetailsModal';
+import EditModal from '../modals/editModal/EditModal';
 
 const Users = () => {
 
   const [allUsers , setAllUsers] = useState([])
 
   const [mainUser , setMainUser] = useState({})
+  const [userID , setUserID] = useState(null)
 
   const [isShowDeleteModal , setIsShowDeleteModal] = useState(false)
   const [isShowDetailsModal , setIsShowDetailsModal] = useState(false)
-  const [userID , setUserID] = useState(null)
+  const [isShowEditModal , setIsShowEditModal] = useState(false)
+
+  //states for EditModal inputs => bayad harkodam state joda dashte bashand
+  const [userNewFirstname , setUserNewFirstname] = useState('')
+  const [userNewLastname , setUserNewLastname] = useState('')
+  const [userNewEmail , setUserNewEmail] = useState('')
+  const [userNewPhone , setUserNewPhone] = useState('')
+  const [userNewScore , setUserNewScore] = useState('')
+  const [userNewCity , setUserNewCity] = useState('')
+  const [userNewBuy , setUserNewBuy] = useState('')
+  const [userNewAddress , setUserNewAddress] = useState('')
+  const [userNewPassword , setUserNewPassword] = useState('')
+  const [userNewUsername , setUserNewUsername] = useState('')
 
   //get AllUsers from API
   useEffect(() => {
@@ -91,7 +105,17 @@ const Users = () => {
           className='btn btn-info mx-1' 
           onClick={() => {
             setUserID(params.row.id)
-            console.log(mainUser);
+            setIsShowEditModal(true)
+            setUserNewFirstname(params.row.firstname)
+            setUserNewLastname(params.row.lastname)
+            setUserNewEmail(params.row.email)
+            setUserNewPhone(params.row.phone)
+            setUserNewScore(params.row.score)
+            setUserNewCity(params.row.city)
+            setUserNewBuy(params.row.buy)
+            setUserNewAddress(params.row.address)
+            setUserNewPassword(params.row.password)
+            setUserNewUsername(params.row.username)
           }}
           >
           ویرایش
@@ -102,7 +126,6 @@ const Users = () => {
             setUserID(params.row.id)
             setIsShowDetailsModal(true)
             setMainUser(params.row)
-            console.log(params.row);
           }}
         >
           جزییات
@@ -131,6 +154,45 @@ const submitDeleteModal = () => {
     getAllUsers()
   })
 }
+
+// for close EditModal
+const close = (e) => {
+  e.preventDefault()
+  setIsShowEditModal(false)
+}
+
+//for submit EditModal
+const newInfos = {
+  firsname:userNewFirstname,
+  lastname:userNewLastname,
+  email:userNewEmail,
+  phone:userNewPhone,
+  score:userNewScore,
+  city:userNewCity,
+  buy:userNewBuy,
+  address:userNewAddress,
+  password:userNewPassword,
+  username:userNewUsername
+}
+const submitUserInfos = (e) => {
+  e.preventDefault()
+
+  fetch(`http://localhost:8000/api/users/${userID}` , {
+     method:'PUT',
+     headers:{
+      'Content-Type' : 'application/json'
+     },
+     body:JSON.stringify(newInfos)
+   })
+  .then(res => res.json())
+  .then((result) => {
+    console.log(result)
+    setIsShowEditModal(false)
+    console.log('user Updated');
+    getAllUsers()
+  })
+}
+
 
   return (
     <div className='users-table'>
@@ -200,6 +262,29 @@ const submitDeleteModal = () => {
           </TableContainer>
           <Button sx={{fontSize:20 , fontFamily:'lale'}} onClick={() => setIsShowDetailsModal(false)}>بستن</Button>
         </DetailsModal>
+      )}
+      {/* --------EDIT MODAL-------- */}
+      {isShowEditModal && (
+        <EditModal
+          hideModal={close}
+          submitInfos={submitUserInfos}
+        >
+          <Box  
+            component="form"
+            sx={{'& .MuiTextField-root': { m: 1, width: '25ch' } ,fontFamily:'lale'}}
+          >
+            <TextField label="firstname" sx={{marginBottom:2 ,fontFamily:'lale'}} color="secondary" value={userNewFirstname} onChange={(e) => setUserNewFirstname(e.target.value)}/>
+            <TextField label="lastname" sx={{marginBottom:2 ,fontFamily:'lale'}} color="secondary"  value={userNewLastname} onChange={(e) => setUserNewLastname(e.target.value)}/>
+            <TextField label="phone" sx={{marginBottom:2 ,fontFamily:'lale'}} color="secondary" value={userNewPhone} onChange={(e) => setUserNewPhone(e.target.value)}/>
+            <TextField label="score" sx={{marginBottom:2 ,fontFamily:'lale'}} color="secondary" value={userNewScore} onChange={(e) => setUserNewScore(e.target.value)}/>
+            <TextField label="city" sx={{marginBottom:2 ,fontFamily:'lale'}} color="secondary" value={userNewCity} onChange={(e) => setUserNewCity(e.target.value)}/>
+            <TextField label="buy" sx={{marginBottom:2 ,fontFamily:'lale'}} color="secondary" value={userNewBuy} onChange={(e) => setUserNewBuy(e.target.value)}/>
+            <TextField label="email" sx={{marginBottom:2 ,fontFamily:'lale'}} color="secondary" value={userNewEmail} onChange={(e) => setUserNewEmail(e.target.value)}/>
+            <TextField label="address" sx={{marginBottom:2 ,fontFamily:'lale'}} color="secondary" value={userNewAddress} onChange={(e) => setUserNewAddress(e.target.value)}/>
+            <TextField label="password" sx={{marginBottom:2 ,fontFamily:'lale'}} color="secondary" value={userNewPassword} onChange={(e) => setUserNewPassword(e.target.value)}/>
+            <TextField label="username" sx={{marginBottom:2 ,fontFamily:'lale'}} color="secondary" value={userNewUsername} onChange={(e) => setUserNewUsername(e.target.value)}/>
+          </Box>
+        </EditModal>
       )}
     </div>
   )
