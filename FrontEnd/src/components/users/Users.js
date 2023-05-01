@@ -3,17 +3,28 @@ import './Users.scss';
 
 //----------MUI-------------//
 import { DataGrid } from '@mui/x-data-grid';
+import { Table , Button } from '@mui/material';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 
 //--------------COMPONENTS-------------//
 import ErrorBox from '../errorBox/ErrorBox';
 import DeleteModal from '../modals/deleteModal/DeleteModal';
+import DetailsModal from '../modals/detailsModal/DetailsModal';
 
 const Users = () => {
 
   const [allUsers , setAllUsers] = useState([])
 
+  const [mainUser , setMainUser] = useState({})
+
   const [isShowDeleteModal , setIsShowDeleteModal] = useState(false)
+  const [isShowDetailsModal , setIsShowDetailsModal] = useState(false)
   const [userID , setUserID] = useState(null)
 
   //get AllUsers from API
@@ -48,18 +59,16 @@ const Users = () => {
   
   const columns = [
   { field: 'id', headerName: 'ID', width: 40 },
-  { field: 'fullname', headerName: 'نام و نام خانوادگی', width: 110,
+  { field: 'fullname', headerName: 'نام و نام خانوادگی', width: 140,
      renderCell: (params) => {
         return(
           <span>{params.row.firstname} {params.row.lastname}</span>
         )
       }
   },
-  { field: 'username', headerName: 'نام کاربری', width: 110 },
-  { field: 'password', headerName: 'رمز', width: 100 },
-  { field: 'phone', headerName: 'شماره تلفن', width: 110 },
-  { field: 'email', headerName: 'ایمیل', width: 150 },
-  { field: 'score', headerName: 'امتیاز', width: 50 , 
+  { field: 'username', headerName: 'نام کاربری', width: 150 },
+  { field: 'password', headerName: 'رمز', width: 110 },
+  { field: 'score', headerName: 'امتیاز', width: 70 , 
       renderCell: (params) => {
         return(
           <p className={params.row.score > 50 ? ('d1') : ('d2') }>{params.row.score}</p>
@@ -82,14 +91,18 @@ const Users = () => {
           className='btn btn-info mx-1' 
           onClick={() => {
             setUserID(params.row.id)
+            console.log(mainUser);
           }}
-        >
+          >
           ویرایش
         </button>
         <button 
           className='btn btn-warning  mx-1' 
           onClick={() => {
             setUserID(params.row.id)
+            setIsShowDetailsModal(true)
+            setMainUser(params.row)
+            console.log(params.row);
           }}
         >
           جزییات
@@ -127,13 +140,15 @@ const submitDeleteModal = () => {
             <>
               <h1>لیست کاربران</h1>
               <DataGrid
+
                 rows={rows}
                 columns={columns}
                 sx={{
-                  // width:900,
                   boxShadow: 2,
                   border: 2,
                   padding:2,
+                  justifyContent:'center',
+                  textAlign:'center',
                   fontFamily:'lale',
                   borderColor: '#2c2fe9',
                   '& .MuiDataGrid-cell:hover': {
@@ -157,6 +172,34 @@ const submitDeleteModal = () => {
           submitAction={submitDeleteModal}
           title='آیا از حذف اطمینان دارید ؟'
         />
+      )}
+      {/* --------DETAILS MODAL-------- */}
+      {isShowDetailsModal && (
+        <DetailsModal>
+          <TableContainer component={Paper}>
+            <Table sx={{ border:1 , width:500,height:100,fontSize:30,borderRadius:10 }} >
+              <TableHead >
+                <TableRow >
+                  <TableCell sx={{fontSize:20 , fontFamily:'lale'}} align='center'>شماره تلفن</TableCell>
+                  <TableCell sx={{fontSize:20 , fontFamily:'lale'}} align='center'>ایمیل</TableCell>
+                  <TableCell sx={{fontSize:20 , fontFamily:'lale'}} align='center'>استان</TableCell>
+                  <TableCell sx={{fontSize:20 , fontFamily:'lale'}} align='center'>شهر</TableCell>
+                  <TableCell sx={{fontSize:20 , fontFamily:'lale'}} align='center'>مقدار خرید</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow >
+                  <TableCell sx={{fontSize:20 , fontFamily:'lale'}} align='center' scope="row">{mainUser.phone}</TableCell>
+                  <TableCell sx={{fontSize:20 , fontFamily:'lale'}} align='center'>{mainUser.email}</TableCell>
+                  <TableCell sx={{fontSize:20 , fontFamily:'lale'}} align='center'>{mainUser.address}</TableCell>
+                  <TableCell sx={{fontSize:20 , fontFamily:'lale'}} align='center'>{mainUser.city}</TableCell>
+                  <TableCell sx={{fontSize:20 , fontFamily:'lale'}} align='center'>{mainUser.buy}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Button sx={{fontSize:20 , fontFamily:'lale'}} onClick={() => setIsShowDetailsModal(false)}>بستن</Button>
+        </DetailsModal>
       )}
     </div>
   )
