@@ -7,10 +7,13 @@ import { DataGrid } from '@mui/x-data-grid';
 
 //--------------COMPONENTS-------------//
 import ErrorBox from '../errorBox/ErrorBox';
+import DeleteModal from '../modals/deleteModal/DeleteModal';
 
 const Users = () => {
 
   const [allUsers , setAllUsers] = useState([])
+
+  const [isShowDeleteModal , setIsShowDeleteModal] = useState(false)
   const [userID , setUserID] = useState(null)
 
   //get AllUsers from API
@@ -67,9 +70,11 @@ const Users = () => {
     return(
       <>
         <button
-           
           className='btn btn-danger mx-1' 
-          onClick={() => deleteUser(params.row.id)}
+          onClick={() => {
+            setIsShowDeleteModal(true)
+            setUserID(params.row.id)
+          }}
         >
           حذف
         </button>
@@ -95,15 +100,21 @@ const Users = () => {
   }},
 ];
 
-const deleteUser = (id) => {
-  fetch(`http://localhost:8000/api/users/${id}` , {
-    method:'DELETE',
-  })
+// for cancel DeleteModal
+const cancelDeleteModal = () => {
+  setIsShowDeleteModal(false)
+}
+
+// for submit DeleteModal
+const submitDeleteModal = () => {
+  fetch(`http://localhost:8000/api/users/${userID}` , {
+     method:'DELETE',
+   })
   .then(res => res.json())
   .then((result) => {
     console.log(result)
-    // setIsShowDeleteModal(false)
-    console.log('comment deleted');
+    setIsShowDeleteModal(false)
+    console.log('user deleted');
     getAllUsers()
   })
 }
@@ -138,6 +149,15 @@ const deleteUser = (id) => {
             <ErrorBox msg='هیچ کاربری یافت نشد ! !'/>
           )
       }
+
+      {/* --------DELETE MODAL-------- */}
+      {isShowDeleteModal && (
+        <DeleteModal
+          cancelAction={cancelDeleteModal}
+          submitAction={submitDeleteModal}
+          title='آیا از حذف اطمینان دارید ؟'
+        />
+      )}
     </div>
   )
 }
